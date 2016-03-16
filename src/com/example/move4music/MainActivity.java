@@ -19,7 +19,6 @@ import android.view.VelocityTracker;
 import android.view.View;
 
 public class MainActivity extends Activity {
-
     DrawingView dv ; 
     Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
 	Map<Integer, Integer> pause = new HashMap<Integer, Integer>();
@@ -34,15 +33,17 @@ public class MainActivity extends Activity {
         setContentView(dv);
         mAudioManager = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
 		sp = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
-		int som1 = sp.load(this, R.raw.piano, 1);
-		int som2 = sp.load(this, R.raw.viva_la_vida, 1);
+		int som1 = sp.load(this, R.raw.sound2, 1);
+		int som2 = sp.load(this, R.raw.sound1, 1);
+		int som3 = sp.load(this, R.raw.sound4, 1);
+		int som4 = sp.load(this, R.raw.sound3, 1);
 		mapa.put(0, som1);
 		mapa.put(1, som2);
+		mapa.put(2, som3);
+		mapa.put(3, som4);
     }
 
     public class DrawingView extends View {
-
-
 		private Paint paint = new Paint();
 		private Paint paint2 = new Paint();
 		private Paint paint3 = new Paint();
@@ -52,11 +53,12 @@ public class MainActivity extends Activity {
 			paint = new Paint();
 			paint.setAntiAlias(true);
 			paint.setDither(true);
-			paint.setColor(Color.GREEN);
+			paint.setColor(Color.argb(3, 255, 3, 3));
 			paint.setStyle(Paint.Style.FILL);
 			paint.setStrokeJoin(Paint.Join.ROUND);
 			paint.setStrokeCap(Paint.Cap.ROUND);
 			paint.setStrokeWidth(5);
+			
 			paint2 = new Paint();
 			paint2.setAntiAlias(true);
 			paint2.setDither(true);
@@ -65,14 +67,16 @@ public class MainActivity extends Activity {
 			paint2.setStrokeJoin(Paint.Join.ROUND);
 			paint2.setStrokeCap(Paint.Cap.ROUND);
 			paint2.setStrokeWidth(1);
+			
 			paint3 = new Paint();
 			paint3.setAntiAlias(true);
 			paint3.setDither(true);
-			paint3.setColor(Color.RED);
+			paint3.setColor(Color.GREEN);
 			paint3.setStyle(Paint.Style.STROKE);
 			paint3.setStrokeJoin(Paint.Join.ROUND);
 			paint3.setStrokeCap(Paint.Cap.ROUND);
 			paint3.setStrokeWidth(4);
+			
 			paint4 = new Paint();
 			paint4.setAntiAlias(true);
 			paint4.setDither(true);
@@ -182,7 +186,7 @@ public class MainActivity extends Activity {
     	
     	private void playSound(int index) {
     		int streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-    		int idS = sp.play(mapa.get((index+1)%2), streamVolume, streamVolume, 1, -1, 1f);
+    		int idS = sp.play(mapa.get((index+1)%4), streamVolume, streamVolume, 1, -1, 1f);
     		pause.put(index, idS);
     	}
     	
